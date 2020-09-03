@@ -5,6 +5,11 @@ const paymentSelect = document.querySelector("#payment");
 const payPalInfo = document.querySelector("#paypal");
 const bitCoinInfo = document.querySelector("#bitcoin");
 const creditInfo = document.querySelector("#credit-card");
+const selectInput = document.querySelector("#title");
+const totalHeading = document.createElement("label");
+const activitiesSection = document.querySelector(".activities");
+const form = document.querySelector("form");
+let totalCost = 0;
 
 
 const firstLoad = () =>{ 
@@ -12,7 +17,9 @@ const firstLoad = () =>{
 
     nameText.focus();
     jobRoleText.style.display = "none";
+
     checkDesign("Select Theme");
+
     paymentSelect.firstElementChild.style.display = "none";
     paymentSelect.value = "credit card";
     payPalInfo.style.display = "none";
@@ -22,12 +29,10 @@ const firstLoad = () =>{
 const checkDesign = (design = "Select Theme") =>{
     const newSelectOption = document.createElement("option");
     let ArrSelectOptions = [];
+    let selectOptions = document.querySelectorAll("#color option");
 
     newSelectOption.textContent = "Please Select a T-Shirt theme";
     newSelectOption.value = "select shirt";
-    
-    let selectOptions = document.querySelectorAll("#color option");
-    
     
     if(design === "Select Theme"){
         for(let i =0; i < selectOptions.length; i++){
@@ -55,12 +60,7 @@ const checkDesign = (design = "Select Theme") =>{
 
 };
 
-
-
 firstLoad();
-
-const selectInput = document.querySelector("#title");
-
 
 selectInput.addEventListener("change", (e) =>{
     if(e.target.value === "other"){
@@ -76,11 +76,6 @@ selectInput.addEventListener("change", (e) =>{
 designDrop.addEventListener("change", (e)=>{
      checkDesign(e.target.value);
 });
-
-
-let totalCost = 0;
-const totalHeading = document.createElement("label");
-const activitiesSection = document.querySelector(".activities");
 
 activitiesSection.addEventListener("change", (e) =>{
 
@@ -108,7 +103,7 @@ activitiesSection.addEventListener("change", (e) =>{
                 
                 if(listedDay === currentDay && listedTimeRange[0] === currentTimeRange[0]){
                 allCheckboxes[i].disabled = false;
-                allCheckboxes[i].parentNode.style.color = "inherit";
+                allCheckboxes[i].parentNode.style.color = "black";
                     }           
             }
         }       
@@ -123,7 +118,6 @@ activitiesSection.addEventListener("change", (e) =>{
     totalHeading.textContent = `Total: ${totalCost}$`;
     actFieldSet.appendChild(totalHeading);
 });
-
 
 paymentSelect.addEventListener("change", (e)=>{
     if(e.target.value === "paypal"){
@@ -143,7 +137,20 @@ paymentSelect.addEventListener("change", (e)=>{
         bitCoinInfo.style.display = "none";
         creditInfo.style.display = "block";
     }
-
 });
+
+form.addEventListener("change", (e)=>{
+
+    const currentID = e.target.getAttribute("id");
+    const test = /[a-zA-Z]+/.test(e.target.value);
+
+    if(currentID === "name" && !test){
+        e.target.style.borderColor= "red";
+    }
+    else{
+        e.target.style.borderColor = "rgb(111, 157, 220)";
+    }
+});
+
 
 
